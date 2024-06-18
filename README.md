@@ -1,15 +1,14 @@
-# neotest-gtest
-![CI status](https://github.com/alfaix/neotest-gtest/actions/workflows/workflow.yaml/badge.svg?event=push)
+# neotest-boost-test
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is a [neotest] adapter for [Google Test][google-test], a popular C++ testing
+This is a [neotest] adapter for [Boost Test][boost-test], a popular C++ testing
 library. It allows easy interactions with tests from your neovim.
 It should work well out-of-the-box for most cases, though some features (see below)
 are not yet supported.
 
 ## Requirements
 * Neovim 0.9.1+, 0.10.x, or nightly.
-* [Google Test][google-test] 1.10+
+* [Boost Test][boost-test]
 * [neotest] (latest, incl. nvim-nio and plenary.nvim)
 * [nvim-treesitter] (latest, with CPP parser installed via `TSInstall cpp`)
 * [nvim-dap] (latest, _optional_, required for debugging)
@@ -22,12 +21,6 @@ The plugin provides full support of all neotest features:
 - seeing pretty output
 - debugging tests
 - all other niceties of neotest
-
-There are two major features which are not yet supported:
-
-- `TEST_P` (parameterized tests)
-- Build tool integration for recompilation - you have to do that manually (or with
-  some other plugin) for now
 
 Contributions are welcome! :)
 
@@ -49,7 +42,7 @@ For setting it up, see [nvim-dap wiki][nvim-dap-wiki].
     "nvim-neotest/neotest",
     dependencies = {
         "nvim-lua/plenary.nvim",
-        "alfaix/neotest-gtest"
+        "sogimu/neotest-boost-test"
         -- your other adapters here
     }
 }
@@ -62,31 +55,31 @@ Simply add `neotest-gtest` to the `adapters` field of neotest's config:
 ```lua
 require("neotest").setup({
   adapters = {
-    require("neotest-gtest").setup({})
+    require("neotest-boost-test").setup({})
   }
 })
 ```
 
 **Before running tests**, you need to assign them to executables. For that, navigate
 to the neotest summary window (`neotest.summary.open()`), mark the tests you want
-to run (`m` by default), and run `:ConfigureGtest` in that same window. It will prompt
+to run (`m` by default), and run `:ConfigureBoostTest` in that same window. It will prompt
 you to enter the path to the executable. You can set the executable path only for
 parent directory, no need to set it for each test separately. This configuration
 is persisted on disk.
 
 Once that's done, use `neotest` the way you usually do: see
 [their documentation](https://github.com/nvim-neotest/neotest#usage).
-You don't need to call any `neotest-gtest` functions for ordinary usage.
+You don't need to call any `neotest-boost-test` functions for ordinary usage.
 
 ## Configuration
 
-`neotest-gtest` comes with the following defaults:
+`neotest-boost-test` comes with the following defaults:
 
 ```lua
-local utils = require("neotest-gtest.utils")
+local utils = require("neotest-boost-test.utils")
 local lib = require("neotest.lib")
 
-require("neotest-gtest").setup({
+require("neotest-boost-test").setup({
   -- fun(string) -> string: takes a file path as string and returns its project root
   -- directory
   -- neotest.lib.files.match_root_pattern() is a convenient factory for these functions:
@@ -110,13 +103,13 @@ require("neotest-gtest").setup({
     -- by default, returns true if the file stem starts with test_ or ends with _test
     -- the extension must be cpp/cppm/cc/cxx/c++
   end,
-  -- How many old test results to keep on disk (stored in stdpath('data')/neotest-gtest/runs)
+  -- How many old test results to keep on disk (stored in stdpath('data')/neotest-boost-test/runs)
   history_size = 3,
   -- To prevent large projects from freezing your computer, there's some throttling
   -- for -- parsing test files. Decrease if your parsing is slow and you have a
   -- monster PC.
   parsing_throttle_ms = 10,
-  -- set configure to a normal mode key which will run :ConfigureGtest (suggested:
+  -- set configure to a normal mode key which will run :ConfigureBoostTest (suggested:
   -- "C", nil by default)
   mappings = { configure = nil },
   summary_view = {
@@ -157,11 +150,11 @@ download googletests as a submodule.
 
 ## License
 
-MIT, see [LICENSE](https://github.com/alfaix/neotest-gtest/blob/main/LICENSE)
+MIT, see [LICENSE](https://github.com/sogimu/neotest-boost-test/blob/main/LICENSE)
 
 [nvim-treesitter]: https://github.com/nvim-treesitter/nvim-treesitter
 [neotest]: https://github.com/nvim-neotest/neotest
-[google-test]: https://github.com/google/googletest
+[boost-test]: https://github.com/google/googletest
 [nvim-dap]: https://github.com/mfussenegger/nvim-dap
 [codelldb]: https://github.com/vadimcn/codelldb
 [mason.nvim]: https://github.com/williamboman/mason.nvim
