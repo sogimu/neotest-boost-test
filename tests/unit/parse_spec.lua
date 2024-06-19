@@ -1,5 +1,5 @@
 local assert = require("luassert")
-local parse_module = require("neotest-gtest.parse")
+local parse_module = require("neotest-boost-test.parse")
 local lib = require("neotest.lib")
 local it = require("nio").tests.it
 local tree_utils = require("tests.utils.tree")
